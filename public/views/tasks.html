@@ -1,0 +1,271 @@
+<div id="taskView" ng-controller="TaskController" style="height:95%; margin-top: 10px;">
+    <div style="margin: 20px;">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        Project Tasks/Details
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="btn-group"  ng-show="mode === 'EDIT'">
+                                            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteTask()">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-success btn-sm" ng-click="createNew()">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="panel-body">
+                        <div class="col-sm-12">
+                            <form>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 input-sm" for="taskname">Project/Task Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text"
+                                                   class="form-control input-sm" 
+                                                   id="taskname" 
+                                                   name="taskname"
+                                                   ng-model="taskName"
+                                                   ng-disabled="mode === 'EDIT'"
+                                                   >
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 input-sm" for="department">Deparment</label>
+                                        <div class="col-sm-9">
+                                            <select 
+                                                class="form-control  input-sm" 
+                                                id="department"
+                                                ng-model="department">
+                                                <option ng-repeat="departmentOption in departmentOptions" 
+                                                        value="{{departmentOption.departmentid}}">{{departmentOption.departmentName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 input-sm" for="assignedto">Assigned To</label>
+                                        <div class="col-sm-9">
+                                           
+                                            <select 
+                                                class="form-control  input-sm" 
+                                                id="assignedto"
+                                                name="assignedto"                                                
+                                                ng-model="assignedTo">
+                                                <option ng-repeat="userOption in userOptions | orderBy: 'fullname'" 
+                                                        value="{{userOption.userid}}">{{userOption.fullname}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 input-sm" for="department">Start Date</label>
+                                        <div class="input-group col-sm-9">
+                                            <input type="text"
+                                                   class="form-control input-sm" uib-datepicker-popup="{{dateFormat}}" 
+                                                   ng-model="startDate" 
+                                                   is-open="startDate.opened"
+                                                   datepicker-options="dateOptions" 
+                                                   ng-required="true"
+                                                   close-text="Close"
+                                                   alt-input-formats="altInputFormats" 
+                                                   ng-disabled="mode === 'EDIT'"/>
+                                            <span class="input-group-btn">
+                                                <button type="button" 
+                                                        class="btn btn-default btn-sm" 
+                                                        ng-click="openStartDate()"
+                                                        ng-disabled="mode === 'EDIT'">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 input-sm" for="department">Due Date</label>
+                                        <div class="input-group col-sm-9">
+
+                                            <input type="text"
+                                                   class="form-control input-sm" uib-datepicker-popup="{{dateFormat}}" 
+                                                   ng-model="dueDate" 
+                                                   is-open="dueDate.opened"
+                                                   datepicker-options="dateOptions" 
+                                                   ng-required="true"
+                                                   close-text="Close"
+                                                   alt-input-formats="altInputFormats" 
+                                                   ng-disabled="mode === 'EDIT'"/>
+                                            <span class="input-group-btn">
+                                                <button type="button" 
+                                                        class="btn btn-default btn-sm" 
+                                                        ng-click="openDueDate()"
+                                                        ng-disabled="mode === 'EDIT'">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 input-sm" 
+                                               for="taskdetails">
+                                            Details of Project/Task
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control input-sm" 
+                                                      rows="5"
+                                                      id="taskdetails"
+                                                      ng-model="taskDetails"
+                                                      ng-disabled="mode === 'EDIT'">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3 input-sm" for="progress">Progress</label>
+                                        <div class="col-sm-9">
+                                            <select 
+                                                class="form-control input-sm" 
+                                                id="progress"
+                                                name="progress"
+                                                ng-model="progress">
+                                                <option 
+                                                    ng-repeat="progressOption in progressOptions" 
+                                                    value="{{progressOption.key}}">
+                                                    {{progressOption.label}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-sm-8">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <button 
+                                                type="submit" 
+                                                class="btn btn-primary btn-block btn-sm"
+                                                ng-click="saveTask()">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">              
+                        Updates
+                    </div>
+                    <div class="panel-body">
+                        <br>
+                        <uib-accordion close-others="oneAtATime">
+                            <div uib-accordion-group class="panel-default" heading="Weekly" is-open="true">
+                                <div class="list-group">
+                                    <span ng-repeat="weeklyStatusItem in weeklyStatusList">
+                                        <span class="list-group-item"  
+                                              ng-if="weeklyStatusItem.statustext !== ''">
+                                            <b><p class="list-group-item-text">Week #{{weeklyStatusItem.periodnumber}}</p></b>
+                                            <p class="list-group-item-text" >{{weeklyStatusItem.statustext}}</p>
+                                        </span>
+                                        <span class="list-group-item" 
+                                              ng-if="weeklyStatusItem.statustext === ''">
+                                            <b><p class="list-group-item-text">Week #{{weeklyStatusItem.periodnumber}}</p></b>
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control input-sm" 
+                                                       id="weeklyStatusInputText{{weeklyStatusItem.periodnumber}}" 
+                                                       name="weeklyStatusInputText{{weeklyStatusItem.periodnumber}}"
+                                                       placeholder="Kindly enter status">
+                                                <span class="input-group-btn">
+                                                    <button type="button" 
+                                                            class="btn btn-default btn-sm" 
+                                                            ng-click="saveStatusText('weeklyStatusInputText', weeklyStatusItem.periodnumber, 'WEEKLY')">
+                                                        <i class="fa fa-save"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>                           
+                        </uib-accordion>
+                        <uib-accordion close-others="oneAtATime">
+                            <div uib-accordion-group class="panel-default" heading="Monthly">
+                                <div class="list-group">
+                                    <span ng-repeat="monthlyStatusItem in monthlyStatusList">
+                                        <span class="list-group-item"  
+                                              ng-if="monthlyStatusItem.statustext !== ''">
+                                            <b><p class="list-group-item-text">Month #{{monthlyStatusItem.periodnumber}}</p></b>
+                                            <p class="list-group-item-text" >{{monthlyStatusItem.statustext}}</p>
+                                        </span>
+                                        <span class="list-group-item" 
+                                              ng-if="monthlyStatusItem.statustext === ''">
+                                            <b><p class="list-group-item-text">Month #{{monthlyStatusItem.periodnumber}}</p></b>
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control input-sm" 
+                                                       id="monthlyStatusInputText{{monthlyStatusItem.periodnumber}}" 
+                                                       name="monthlyStatusInputText{{monthlyStatusItem.periodnumber}}"
+                                                       placeholder="Kindly enter status">
+                                                <span class="input-group-btn">
+                                                    <button type="button" 
+                                                            class="btn btn-default btn-sm" 
+                                                            ng-click="saveStatusText('monthlyStatusInputText', monthlyStatusItem.periodnumber, 'MONTHLY')">
+                                                        <i class="fa fa-save"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </span>
+                                    </span>
+                                </div>                            
+                            </div>
+                        </uib-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

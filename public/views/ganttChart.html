@@ -1,0 +1,69 @@
+<div style="height:95%; padding-top: 10px;" >
+    <div id="opmGanttChart" 
+         style="height:100%;" 
+         ng-controller="ChartController">
+        <div dhx-gantt 
+             data="ganttTasks"  
+             style="height:100%;" >
+            <div gantt-column 
+                 label="Task Name" 
+                 width="200">
+                {{task.name}}
+            </div>
+            <div gantt-column 
+                 label="Assigned To">
+                {{task.assigned_to}}
+            </div>
+            <div gantt-column 
+                 align="center"
+                 label="Start Date"
+                 template-fn="startDateFn">
+                {{task.start_date| date: 'MM/dd/yyyy'}}
+            </div>
+            <div gantt-column 
+                 align="center" 
+                 label="Due Date" 
+                 template-fn="dueDateFn">
+                {{task.end_date| date: 'MM/dd/yyyy'}}
+            </div>
+
+            <div gantt-column 
+                 align="center" 
+                 label="% Completed"
+                 width="80"
+                 template-fn="progressFn">
+                {{task.progress * 100}}%
+            </div>
+
+            <div gantt-column 
+                 label="Department Head">
+                {{task.department_head}}
+            </div>
+
+        </div>
+
+        <div gantt-template="task_text" 
+             style="display: none;">
+            {{task.name}}
+        </div>
+
+        <div gantt-template="progress_text" 
+             style="display: none;">
+            <span style="text-align:left;">
+                {{task.progress * 100}}%
+            </span>
+        </div>
+
+        <div gantt-template="task_class" 
+             template-fn="taskClassFn" 
+             style="display: none;">
+        </div>
+
+        <div gantt-template="scale_cell_class"
+             template-fn="cellWeekendClassFn" 
+             
+             style="z-index: 99; display: none;">
+        </div>
+
+    </div>
+</div>

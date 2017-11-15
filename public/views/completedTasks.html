@@ -1,0 +1,51 @@
+<div class="container" ng-controller="TaskController">
+    <div style="margin: 20px;">
+        <br>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <form method="POST" target="_blank" action="/api/exportcompletedtasks">
+                    <button class="btn btn-primary btn-block btn-sm">
+                        <i class="fa fa-download"></i>
+                        &nbsp;Export to Excel
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2"></div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Project Name</th>
+                        <th>Assigned To</th>
+                        <th>Date Completed</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="task in completedTasks" >
+                        <td>{{task.departmentName}}</td>
+                        <td>{{task.taskname}}</td>
+                        <td>{{task.assignedto}}</td>
+                        <td>{{task.datecompleted}}</td>
+                        <td><i class="fa fa-ellipsis-h fa-lg" 
+                               ng-click="setScopeValues({_id: task.taskid});"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-2"></div>
+
+    </div>
+</div>
+

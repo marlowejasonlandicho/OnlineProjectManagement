@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base href="/">
+        <title>Online Project Management</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<link rel="stylesheet" href="lib/gantt/skins/dhtmlxgantt_meadow.css" type="text/css" media="screen" title="no title" charset="utf-8">-->
+        <!--<link rel="stylesheet" href="lib/gantt/skins/dhtmlxgantt_skyblue.css" type="text/css" media="screen" title="no title" charset="utf-8">-->
+
+        <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-animate/angular-animate.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-aria/angular-aria.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-messages/angular-messages.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-material/angular-material.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-route/angular-route.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <!--        
+            <script type="text/javascript" src="../bower_components/textAngular/dist/textAngular-rangy.min.js"></script>
+            <script type="text/javascript" src="../bower_components/textangular/dist/textAngular-sanitize.min.js"></script>
+            <script type="text/javascript" src="../bower_components/textangular/dist/textAngular.min.js"></script>
+        -->
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript" src="../application.js"></script>
+        <script type="text/javascript" src="../values/constants.js"></script>
+
+        <script type="text/javascript" src="../controllers/mainController.js"></script>
+        <script type="text/javascript" src="../controllers/chartController.js"></script>
+        <script type="text/javascript" src="../controllers/taskController.js"></script>
+        <script type="text/javascript" src="../controllers/settingsController.js"></script>
+        <script type="text/javascript" src="../controllers/departmentController.js"></script>
+        <script type="text/javascript" src="../controllers/userContoller.js"></script>
+        <script type="text/javascript" src="../controllers/loginController.js"></script>
+
+        <script type="text/javascript" src="../services/departmentService.js"></script>
+        <script type="text/javascript" src="../services/taskService.js"></script>
+        <script type="text/javascript" src="../services/completedTaskService.js"></script>
+        <script type="text/javascript" src="../services/statusService.js"></script>
+        <script type="text/javascript" src="../services/settingsService.js"></script>
+        <script type="text/javascript" src="../services/authenticationService.js"></script>
+        <script type="text/javascript" src="../services/userService.js"></script>
+        <script type="text/javascript" src="../services/requestInterceptor.js"></script>
+
+        <script src="../directives/gantt.js"></script>
+        <script src="../directives/ganttTemplate.js"></script>
+        <script src="../directives/ganttColumn.js"></script>
+        <script src="../directives/ganttColumnAdd.js"></script>
+
+        <script src="../lib/dhtmlx/dhtmlx.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../lib/gantt/dhtmlxganttv4.1.0.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../lib/gantt/ext/dhtmlxgantt_tooltip.js" type="text/javascript" charset="utf-8"></script>
+
+        <link rel="stylesheet" href="../lib/dhtmlx/dhtmlx.css">
+        <link rel="stylesheet" href="../lib/gantt/dhtmlxgantt.css">
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
+
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="shortcut icon" href="img/favicon.png" type="image/png" />
+
+    </head>
+
+    <body ng-app="onlineProjectManagement" ng-controller="MainController">
+        <div>
+            <header id="header">
+                <div class="wrapped">
+                    <div class="site-logo">
+                        <a href="#" title="OPM Management"><img src="../img/logo.svg" alt=""></a>
+                    </div>
+                    <div class="opm-nav">OPM Management
+                        <div class="region region-primary-menu">
+                            <nav role="navigation" 
+                                 id="block-opm-main-menu" 
+                                 class="block block-menu navigation menu--main">
+                                <ul class="menu">
+                                    <li class="menu-item menu-item--expanded menu-item--active-trail">
+                                        <a href="#" class="is-active">Online Project Management</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div id="logoutDiv">
+                Hello,&nbsp;{{globals.currentUser.fullname}}&nbsp;|&nbsp;<a href="#" ng-click="logout()">Logout</a>
+            </div>
+        </div>
+        <div id="opm_tabbar" style="padding: 5px;width:100%;height:100%;" >
+            <uib-tabset active="active" style="height:100%;">
+                <uib-tab index="0" style="height:100%;">
+                    <uib-tab-heading 
+                        class="dropdown" 
+                        ng-class="{
+                                    open : isOpen
+                                }" 
+                        >
+                        <span>&nbsp;{{selectedView}}&nbsp;</span>
+                        <i class="fa fa-caret-down fa-lg" ng-click="isOpen = !isOpen;"></i>
+                        &nbsp;
+                        <i class="fa fa-refresh" ng-click="gantt.render();"></i>
+
+                        <ul class="dropdown-menu" ng-mouseleave="isOpen = !isOpen;">
+                            <li><a href="#" ng-click="setGanttScaleConfig('2');">Week View</a></li>
+                            <li><a href="#" ng-click="setGanttScaleConfig('1');">Day View</a></li>
+                            <li><a href="#" ng-click="setGanttScaleConfig('3');">Month View</a></li>
+                        </ul>
+                    </uib-tab-heading>
+                    <span ng-include="ganttChartURL"></span>
+                </uib-tab>
+                <uib-tab id="taskTab" index="1" style="height:100%;">
+                    <uib-tab-heading>
+                        <i class="fa fa-tasks"></i>
+                        <span>&nbsp;Task</span>
+                    </uib-tab-heading>
+                    <span ng-include="tasksURL"></span>
+                </uib-tab>
+                <uib-tab index="2" style="height:100%;" class="pull-right" ng-if="globals.currentUser.rolename === 'ADMIN'">
+                    <uib-tab-heading>
+                        <i class="fa fa-gear"></i>
+                        <span>&nbsp;Email Settings</span>
+                    </uib-tab-heading>
+                    <span ng-include="settingsURL"></span>
+                </uib-tab>
+                <uib-tab index="5" style="height:100%;" class="pull-right" ng-if="globals.currentUser.rolename === 'ADMIN'">
+                    <uib-tab-heading>
+                        <i class="fa fa-gear"></i>
+                        <span>&nbsp;User Maintenance</span>
+                    </uib-tab-heading>
+                    <span ng-include="userMaintenanceURL"></span>
+                </uib-tab>
+                <uib-tab index="4" style="height:100%;" class="pull-right" ng-if="globals.currentUser.rolename === 'ADMIN'">
+                    <uib-tab-heading>
+                        <i class="fa fa-gear"></i>
+                        <span>&nbsp;Department Maintenance</span>
+                    </uib-tab-heading>
+                    <span ng-include="departmentMaintenanceURL"></span>
+                </uib-tab>
+                <uib-tab index="3" style="height:100%;" class="pull-right">
+                    <uib-tab-heading>
+                        <i class="fa fa-check"></i>
+                        <span>&nbsp;Completed Tasks</span>
+                    </uib-tab-heading>
+                    <span ng-include="completedTasksURL"></span>
+                </uib-tab>
+
+            </uib-tabset>
+        </div>
+    </body>
+</html>
+
+
+
+

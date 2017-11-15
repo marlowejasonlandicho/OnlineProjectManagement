@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base href="/">
+        <meta charset="UTF-8">
+        <title>Online Project Management</title>
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+
+        <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-route/angular-route.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-animate/angular-animate.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-material/angular-material.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-aria/angular-aria.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-messages/angular-messages.js"></script><script type="text/javascript" src="../bower_components/angular-resource/angular-resource.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-cookies/angular-cookies.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-route/angular-route.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+        <script type="text/javascript" src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+
+        <script type="text/javascript" src="../application.js"></script>
+        <script type="text/javascript" src="../values/constants.js"></script>
+
+        <script type="text/javascript" src="../controllers/loginController.js"></script>
+        <script type="text/javascript" src="../controllers/quickStatusUpdateController.js"></script>
+
+        <script type="text/javascript" src="../services/authenticationService.js"></script>
+        <script type="text/javascript" src="../services/taskService.js"></script>
+        <script type="text/javascript" src="../services/statusService.js"></script>
+
+        <script type="text/javascript" src="../services/requestInterceptor.js"></script>
+
+        <link rel="stylesheet" href="css/styles.css">
+
+    </head>
+
+    <body ng-app="onlineProjectManagement">
+        <div class="container" ng-controller="QuickStatusUpdateController">
+            <div ng-show="error" class="alert alert-danger">{{error}}</div>
+            <form name="form" ng-submit="submit()" role="form">
+                <div style="margin: 20px;">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-sm-11">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    Project Tasks/Details
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="panel-body">
+                                    <div class="col-sm-12">
+                                        <br>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3 input-sm" for="taskname">Project/Task Name</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text"
+                                                           class="form-control input-sm" 
+                                                           id="taskname" 
+                                                           name="taskname"
+                                                           ng-model="taskName"
+                                                           ng-disabled="true"
+                                                           required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3 input-sm" for="progress">Progress</label>
+                                                <div class="col-sm-9">
+                                                    <select 
+                                                        class="form-control" 
+                                                        id="progress"
+                                                        name="progress"
+                                                        ng-model="progress"
+                                                        required>
+                                                        <option 
+                                                            ng-repeat="progressOption in progressOptions" 
+                                                            value="{{progressOption.key}}">{{progressOption.label}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3 input-sm" for="status">Status</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text"
+                                                           class="form-control input-sm" 
+                                                           id="status" 
+                                                           name="status"
+                                                           ng-model="status"
+                                                           required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <br>
+
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-sm-8">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <button 
+                                                        type="submit" 
+                                                        class="btn btn-danger btn-block">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>

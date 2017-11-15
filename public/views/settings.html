@@ -1,0 +1,201 @@
+<div ng-controller="SettingsController">
+    <div style="margin: 20px;">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        Email Settings
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="smtphost">SMTP Host/Service</label>
+                                <div class="col-sm-9">
+                                    <input type="text"
+                                           class="form-control input-sm" 
+                                           id="smtphost" 
+                                           name="smtphost"
+                                           ng-model="smtpHost">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="smtpusername">SMTP User Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text"
+                                           class="form-control input-sm" 
+                                           id="smtpusername" 
+                                           name="smtpusername"
+                                           ng-model="smtpUsername">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="smtpuserpw">SMTP User Password</label>
+                                <div class="col-sm-9">
+                                    <input type="text"
+                                           class="form-control input-sm" 
+                                           id="smtpuserpw" 
+                                           name="smtpuserpw"
+                                           ng-model="smtpUserPw">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="appURL">Application URL</label>
+                                <div class="col-sm-9">
+                                    <input type="text"
+                                           class="form-control input-sm"  
+                                           id="appURL" 
+                                           name="appURL"
+                                           ng-model="appURL" 
+                                           ng-required="true">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="fromEmail">Email From Field</label>
+                                <div class="col-sm-9">
+                                    <input type="text"
+                                           class="form-control input-sm" 
+                                           id="fromemail" 
+                                           name="fromemail"
+                                           ng-model="fromEmail">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="emailsubject">Email Subject</label>
+                                <div class="col-sm-9">
+                                    <input type="text"
+                                           class="form-control input-sm" 
+                                           id="emailsubject" 
+                                           name="emailsubject"
+                                           ng-model="emailSubject">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="emailMessage">Email Message</label>
+                                <div class="col-sm-9">
+                                    <!--<text-angular ng-model="emailMessage"></text-angular>-->
+                                    <textarea rows="4" cols="50"
+                                              class="form-control" 
+                                              id="emailmessage" 
+                                              name="emailmessage"
+                                              ng-model="emailMessage">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                </div>
+                                <div class="col-sm-4">
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-primary btn-block"
+                                        ng-click="saveEmailSettings()">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        Email Schedule
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="department">Day of the week</label>
+                                <div class="col-sm-9">
+                                    <select 
+                                        class="form-control" 
+                                        id="department"
+                                        ng-model="dayOfTheWeek">
+                                        <option ng-repeat="dayOfWeek in dayOfWeeks" 
+                                                value="{{dayOfWeek.value}}">{{dayOfWeek.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 input-sm" for="timeofday">Time of day</label>
+                                <div class="col-sm-9">
+                                    <input type="time"
+                                           class="form-control input-sm"  
+                                           id="timeofday" 
+                                           name="timeofday"
+                                           ng-model="timeOfDay" 
+                                           ng-required="true"  >
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                </div>
+                                <div class="col-sm-4">
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-primary btn-block"
+                                        ng-click="saveScheduleSettings()">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
